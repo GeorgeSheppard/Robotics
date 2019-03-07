@@ -15,7 +15,7 @@ class IncreaseQuarterPeriod():
         # offset is time from maximum to swing
         self.time_switch = 100
         self.offset = -0.2
-        self.last_maximum = self.last_maxima(all_data, 'be')
+        self.last_maximum = last_maxima(all_data['time'], total_angle_list(all_data), 'be')
 
         # setting up times
         self.start_time = values['time']
