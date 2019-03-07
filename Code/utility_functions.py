@@ -228,9 +228,8 @@ def total_angle(be, se0, se1):
     total_angle = np.arctan(x/y)
     return total_angle
 
-def total_angle_list(all_data,):
+def total_angle_list(all_data):
     """returns the list of total_encoder values and matching times"""
-    times = all_data['time']
     total_angles = []
     for i,t in enumerate(times):
         ta = total_angle(all_data['be'], all_data['se0'], all_data['se1'])
