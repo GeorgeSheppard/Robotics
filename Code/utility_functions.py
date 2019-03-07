@@ -219,5 +219,14 @@ def last_minima(self, all_data):
 
     return min_times
 
-def total_angle(big_encoder, small_encoder1, small_encoder2):
+def total_angle(be, se0, se1):
+    """
+    Takes encoder values at a single time and converts to a total angle.
+    Used for triple pendulum examples.
+    """
+    x, y = position_seat_cartesian(be, se0, se1)
+    total_angle = np.arctan(x/y)
+    return total_angle
+
+def total_angle_all_data(all_data):
     pass
