@@ -2,7 +2,8 @@ from time import time
 
 '''My attempt to implement Georges idea for gaining amplitude.
    Instead of using the encoder angle, the total angle of NAOs 
-   position to the swing is used.'''
+   position to the swing is used.
+   This is a dirty conversion, I don't expect it to work.'''
 
 import time as tme
 import numpy as np
@@ -20,7 +21,7 @@ class IncreaseQuarterPeriod():
         # setting up times
         self.start_time = values['time']
         self.previous_time = values['time']
-        self.previous_be = values['be']
+        self.previous_te = total_angle(values['be'], values['se0'], values['se1'])
 
         # max_angle used for increasing min_angle for decreasing
         self.increasing = kwargs.get('increasing', True)
@@ -38,10 +39,10 @@ class IncreaseQuarterPeriod():
     def algo(self, values, all_data):
 
         # sign of big encoder changes when crossing zero point
-        if np.sign(values['be']) != np.sign(self.previous_be):
+        if np.sign(total_angle(values['be'], values['se0'], values['se1'])) != np.sign(self.previous_te):
 
-            self.min_time = last_zero_crossing(values, self.previous_time, self.previous_be)
-            self.max_time = last_maxima(all_data, be_time='time')
+            self.min_time = last_zero_crossing(values, self.previous_time, self.previous_te)
+            self.max_time = last_maxima(all_data['time'], total_angle_list[all_data], be_time='time')
             # quarter period difference between time at maxima and minima
             self.quart_period = np.abs(self.min_time - self.max_time)
 
@@ -51,7 +52,7 @@ class IncreaseQuarterPeriod():
             print 'Next switching time', self.time_switch
 
         # At the end of the loop, set the value of big encoder to the previous value
-        self.previous_be = values['be']
+        self.previous_te = total_angle(values['be'], values['se0'], values['se1'])
         self.previous_time = values['time']
 
         if values['time'] > self.time_switch:
@@ -77,13 +78,14 @@ class IncreaseQuarterPeriod():
         return 'no change'
 
     def next_position_calculation(self, values):
-        if values['be'] < 0 and self.increasing == True:
+        ta = total_angle(values['be'], values['se0'], values['se1'])
+        if ta < 0 and self.increasing == True:
             next_position = 'seated'
-        elif values['be'] > 0 and self.increasing == True:
+        elif ta > 0 and self.increasing == True:
             next_position = 'extended'
-        elif values['be'] < 0 and self.increasing == False:
+        elif ta < 0 and self.increasing == False:
             next_position = 'extended'
-        elif values['be'] > 0 and self.increasing == False:
+        elif ta > 0 and self.increasing == False:
             next_position = 'seated'
         else:
             print "CONDITIONS DON'T CORRESPOND TO ANY POSITION, POSITION KEEPING CONSTANT"
