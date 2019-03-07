@@ -1,18 +1,21 @@
+from time import time
+
+'''My attempt to implement Georges idea for gaining amplitude.
+   Instead of using the encoder angle, the total angle of NAOs 
+   position to the swing is used.'''
+
 import time as tme
 import numpy as np
 from utility_functions import last_maxima, last_zero_crossing, moving_average
 
 
 class IncreaseQuarterPeriod():
-    """
-    This is an example algorithm class, as everyone will be working on different algorithms
-    """
 
     def __init__(self, values, all_data, **kwargs):
         # offset is time from maximum to swing
         self.time_switch = 100
         self.offset = -0.2
-        self.last_maximum = last_maxima(all_data['time'], all_data['be'], 'be')
+        self.last_maximum = self.last_maxima(all_data, 'be')
 
         # setting up times
         self.start_time = values['time']
@@ -38,13 +41,13 @@ class IncreaseQuarterPeriod():
         if np.sign(values['be']) != np.sign(self.previous_be):
 
             self.min_time = last_zero_crossing(values, self.previous_time, self.previous_be)
-            self.max_time = last_maxima(all_data['time'], all_data['be'], be_time='time')
+            self.max_time = last_maxima(all_data, be_time='time')
             # quarter period difference between time at maxima and minima
             self.quart_period = np.abs(self.min_time - self.max_time)
 
             # set time for position to switch
             self.time_switch = self.min_time + self.quart_period + self.offset
-            self.last_maximum = last_maxima(all_data['time'], all_data['be'], be_time='be')
+            self.last_maximum = last_maxima(all_data, be_time='be')
             print 'Next switching time', self.time_switch
 
         # At the end of the loop, set the value of big encoder to the previous value

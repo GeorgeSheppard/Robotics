@@ -35,7 +35,7 @@ class IncreaseParametric():
             true_zero_time = last_zero_crossing(values, self.prev_time, self.prev_be)
 
             # calculate quarter period based on latest maximum and minimum
-            self.max_times = last_maxima(all_data, be_time='time')
+            self.max_times = last_maxima(all_data['time'], all_data['be'], be_time='time')
             quarter_period = abs(self.max_times[-1] - true_zero_time)
 
             # maximum and minimum point

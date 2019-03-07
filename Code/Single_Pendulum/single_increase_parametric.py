@@ -29,7 +29,7 @@ class Increase():
         self.prev_time, self.curr_time = 0.0, values['time']
         self.moving_down = True
 
-        self.max_times = self.last_maxima(all_data)
+        self.max_times = self.last_maxima(all_data['time'])
         self.min_times = self.last_minima(all_data)
 
         self.time_to_switch_unfolded = 100
