@@ -14,6 +14,7 @@ class Start():
 
     def algo(self, values, all_data):
         t = values['time']  # renames current time to t
+        print 'Time: {:.2f}'.format(values['time']), 'Big encoder: {:.2f}'.format(values['be'])
 
         if t < 0.1:
             # sets the first kick from standstill.
@@ -41,7 +42,9 @@ class Start():
         if 0.15 < t - self.last_move < 0.5:
             if t - self.start_time > self.duration:
                 print 'last move', self.last_move
+                print 'Switch on duration'
                 return 'switch'
             if values['be'] > self.max_angle:
                 print 'last move', self.last_move
+                print 'Switched on max angle'
                 return 'switch'

@@ -9,7 +9,7 @@ class IncreaseDecrease():
         self.start_time = values['time']
         self.max_angle = kwargs.get('max_angle', 180)
         self.increase = kwargs.get('increase', True)
-        self.duration = kwargs.get('duration', float('int'))
+        self.duration = kwargs.get('duration', float('inf'))
         self.pendulum_length = 1.82
         self.min_angle = kwargs.get('min_angle', 5)
         self.next_highest_angle = None
@@ -30,7 +30,6 @@ class IncreaseDecrease():
             pass
         # If the sign changed, calculate the approximation of the highest point it can reach
         else:
-            print("At lowest point now, calculating the next max angle")
             self.max_speed = math.radians(values['av']) * self.pendulum_length
             h = 0.5*(self.max_speed**2)/9.8
             # Calculate the next highest angle in degrees,
@@ -39,8 +38,7 @@ class IncreaseDecrease():
                 math.acos((self.pendulum_length-h)/self.pendulum_length))-2
             self.next_highest_angle = np.sign(
                 current_be) * self.next_highest_angle
-            print('next_biggist_angle')
-            print(self.next_highest_angle)
+            print values['time'], 'At lowest point', 'Big encoder {:.2f}'.format(values['be']) 
 
         if (self.next_highest_angle):
             next_pos = None

@@ -1,3 +1,8 @@
+"""
+These positions are used to change positions of nao, keys are shorthand, and in limbdata they
+correspond to the values that naoqi requires that are more awkward to use.
+"""
+
 positions = {
     'extended': {
 
@@ -45,11 +50,11 @@ positions = {
         'RKP': 1.49207,
         'RAP': 0,
         'RAR': 0,
-        'LSR': 0.46402,
-        'LSP': 1.3055,
-        'LER': -1.53414,
-        'LEY': -1.1344,
-        'LWY': -0.682438,
+        'LSR': 0.31415,
+        'LSP': 1.4119,
+        'LER': -1.54462,
+        'LEY': -1.2985,
+        'LWY': -0.37699,
         'LH': 0.00860,
         # 'LHYP':0,
         'LHP': -1.08756,

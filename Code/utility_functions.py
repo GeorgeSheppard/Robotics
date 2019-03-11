@@ -159,7 +159,18 @@ def centre_of_mass_respect_seat(position, masses):
     elif position == 'lowered' and masses == False:
         x_com = (0.031 - 0.03)
         y_com = (0.16 - 0.035)
-    # need more elif's here for with masses
+    elif position == 'seated' and masses:
+        x_com = 1.000
+        y_com = 1.000
+    elif position == 'extended' and masses:
+        x_com = 1.000
+        y_com = 1.000
+    elif position == 'raised' and masses:
+        x_com = 1.000
+        y_com = 1.000
+    elif position == 'lowered' and masses:
+        x_com = 1.000
+        y_com = 1.000
     else:
         raise ValueError("Position not found")
     return [x_com, y_com]

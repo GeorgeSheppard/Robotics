@@ -1,4 +1,3 @@
-import time as tme
 import numpy as np
 from utility_functions import last_maxima, last_zero_crossing, moving_average
 
@@ -44,8 +43,13 @@ class IncreaseQuarterPeriod():
 
             # set time for position to switch
             self.time_switch = self.min_time + self.quart_period + self.offset
+<<<<<<< HEAD
             self.last_maximum = last_maxima(all_data['time'], all_data['be'], be_time='be')
             print 'Next switching time', self.time_switch
+=======
+            self.last_maximum = last_maxima(all_data, be_time='be')
+            print 'Next switching time: {:.2f}'.format(self.time_switch), 'Last maximum: {:.2f}'.format(self.last_maximum)
+>>>>>>> master
 
         # At the end of the loop, set the value of big encoder to the previous value
         self.previous_be = values['be']

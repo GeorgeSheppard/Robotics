@@ -14,10 +14,10 @@ class MaintainConstant():
 
     def algo(self, values, all_data):
 
-        if values['be'] > self.max_angle - 3.0:
+        if values['be'] > self.max_angle - 11.0:
             print 'Big encoder at kick command', values['be']
             return 'extended'
-        if values['be'] < -self.max_angle + 3.0:
+        if values['be'] < -self.max_angle + 11.0:
             print 'Big encoder at kick command', values['be']
             return 'seated'
 

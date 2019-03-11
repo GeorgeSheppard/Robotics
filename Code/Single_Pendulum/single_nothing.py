@@ -5,7 +5,6 @@ import numpy as np
 class Nothing():
 
     def __init__(self, values, all_data, **kwargs):
-        print 'Nothing script'
         self.start_time = values['time']
         self.duration = kwargs.get('duration', float('inf'))
 

@@ -9,6 +9,7 @@ from single_increase_quarter_period import IncreaseQuarterPeriod, DecreaseQuarte
 from single_increase_parametric_rework import IncreaseParametric, DecreaseParametric
 from single_maintain_constant import MaintainConstant
 from single_nothing import Nothing
+from single_increase_angular_velocity import IncreaseAngularVelocity
 
 
 class Algorithm(Robot, Encoders):
@@ -18,23 +19,19 @@ class Algorithm(Robot, Encoders):
 
     def __init__(self, BigEncoder, SmallEncoders, values, positions, ALProxy):
         # Initialise encoder
-        Encoders.__init__(self, BigEncoder, SmallEncoders)
+        Encoders.__init__(self, BigEncoder, SmallEncoders, small_encoders_required=False)
         # Initialise robot
-        Robot.__init__(self, values, positions, ALProxy, masses=False)
+        Robot.__init__(self, values, positions, ALProxy, masses=True)
 
         #self.order = [{
             #'algo': Start,
-            #'max_angle': 3.5
+            #'duration': 25.0
         #},{
             #'algo': IncreaseQuarterPeriod,
             #'max_angle': 15
         #},{
             #'algo': DecreaseQuarterPeriod,
             #'min_angle': 10
-        #},{
-            #'algo': MaintainConstant,
-            #'max_angle': 10,
-            #'duration': 30
         #},{
             #'algo': IncreaseParametric,
             #'duration': 80
@@ -50,6 +47,33 @@ class Algorithm(Robot, Encoders):
         
         #self.order = [{
             #'algo': Nothing,
+            #'duration': 10
+        #},{
+            #'algo': Stop,
+            #'min_angle': 1.0
+        #},{
+            #'algo': Nothing
+        #}]
+        
+        self.order = [{
+            'algo': Nothing,
+            'duration': 5
+        },{
+            'algo': IncreaseAngularVelocity,
+            'duration': 4
+        }]
+        
+        #self.order = [{
+            #'algo': Nothing,
+            #'duration': 5.0
+        #},{
+            #'algo': MaintainConstant,
+            #'max_angle': 10,
+            #'duration': 60
+        #}]
+        
+        #self.order = [{
+            #'algo': Nothing,
             #'duration': 5.0
         #},{
             #'algo': MaintainConstant,
@@ -57,13 +81,10 @@ class Algorithm(Robot, Encoders):
             #'duration': 60.0
         #}]
         
-        self.order = [{
-            'algo': Start,
-            'duration': 25.0
-        },{
-            'algo': IncreaseQuarterPeriod,
-            'duration': 60.0
-        },{
-            'algo': IncreaseParametric,
-            'duration': 250.0
-        }]
+        #self.order = [{
+            #'algo': Nothing,
+            #'duration': 5.0
+        #},{
+            #'algo': IncreaseQuarterPeriod,
+            #'duration': 120.0
+        #}]
