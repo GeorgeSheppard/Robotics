@@ -197,17 +197,6 @@ def last_zero_crossing(values, previous_time, previous_be):
     return min_time
 
 
-# def last_maxima(all_data, be_time='time', window_size=5):
-#     # extracting a moving average of the previous encoder values to prevent incorrect maximas begin evaluated
-#     # only use an odd number for window size, as indexes need to be adjusted below
-#     avg_be = np.abs(moving_average(all_data['be'][-30:], window_size))
-#     # extract index corresponding to latest maxima, index_max_angle(number of previous values to return)
-#     angle_max_index = (np.diff(np.sign(np.diff(avg_be))) < 0).nonzero()[0] + 1 + (window_size - 1)/2
-#     if be_time == 'time':
-#         return all_data['time'][-30:][angle_max_index[-1]]
-#     elif be_time == 'be':
-#         return all_data['be'][-30:][angle_max_index[-1]]
-
 def last_maxima(time, values, time_values='time', window_size=5):
     avg_values = np.abs(moving_average(values[-30:], window_size))
     max_index = (np.diff(np.sign(np.diff(avg_be))) < 0).nonzero()[0] + 1 + (window_size - 1)/2
@@ -236,13 +225,13 @@ def total_angle(be, se0, se1):
     Used for triple pendulum examples.
     """
     x, y = position_seat_cartesian(be, se0, se1)
-    total_angle = np.arctan(x/y)
+    total_angle = np.arctan(x/y) * 180/np.pi
     return total_angle
 
 def total_angle_list(all_data):
     """returns the list of total_encoder values and matching times"""
     total_angles = []
-    for i,t in enumerate(times):
-        ta = total_angle(all_data['be'], all_data['se0'], all_data['se1'])
+    for i in all_data:
+        ta = total_angle(all_data['be'][i], all_data['se0'][i], all_data['se1'][i])
         total_angles.append(ta)
     return total_angles
